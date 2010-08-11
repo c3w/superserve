@@ -1,0 +1,23 @@
+SUPERSERVE
+by c3w
+http://github.com/c3w/superserve
+
+Generic init.d wrapper.
+
+Got a job/daemon that needs to run at boot time?  You could put it in /etc/crontab as a @reboot
+job, but wouldn't you like to have start/stop/restart control?
+
+Enter SuperServe! You can create as many jobs as you'd like, symlink them in init.d to the
+superserve script, and superserve, using $0, references the appropriate .inc in /opt/superserve
+
+Usage:
+	mkdir -p /opt/superserve
+	create a .inc, e.g. job1.inc
+		job1.inc reads
+			job1&
+	symlink into /etc/init.d
+		cd /etc/init.d
+		ln -s /opt/superserve/superserve job1
+		chkconfig job1 add
+		chkconfig job1 on
+		service job1 restart
