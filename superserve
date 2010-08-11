@@ -1,0 +1,59 @@
+#!/bin/bash
+#
+# chkconfig: 2345 99 01
+# description: generic init.d wrapper
+#
+
+# Usage: Symlink a process name to superserve and create an inc/process.inc with START_CMD, STOP_CMD, and RESTART_CMD
+
+whatAmI=$(echo ${0}|sed -e "s/[\.\/]//g;s/^etcinitd//g")
+BASE_DIR="/opt/superserve"
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+if [ -f ${BASE_DIR}/inc/${whatAmI}.pass ]; then {
+	. ${BASE_DIR}/inc/${whatAmI}.pass ${1}
+	exit
+}; fi
+
+if [ -f ${BASE_DIR}/inc/${whatAmI}.inc ]; then {
+	case "$1" in
+		start)
+			echo -n "starting ${whatAmI}. . . "
+			. ${BASE_DIR}/inc/${whatAmI}.inc
+			echo $! > /var/run/${whatAmI}.pid
+			if [ $? == 0 ]; then {
+				echo_success; echo
+			} else {
+				echo_failure; echo
+			}; fi
+			;;
+		stop)
+			echo -n "stopping ${whatAmI}. . . "
+			kill $(cat /var/run/${whatAmI}.pid)
+			if [ $? == 0 ]; then {
+				echo_success; echo
+			} else {
+				echo_failure; echo
+			}; fi
+			;;
+		restart)
+			echo -n "restarting ${whatAmI}. . . "
+			kill $(cat /var/run/${whatAmI}.pid)
+			. ${BASE_DIR}/inc/${whatAmI}.inc
+			echo $! > /var/run/${whatAmI}.pid
+			if [ $? == 0 ]; then {
+				echo_success; echo
+			} else {
+				echo_failure; echo
+			}; fi
+			;;
+		*)
+			echo "Usage: $whatAmI [start|stop|restart]"
+			;;
+	esac
+} else {
+	echo "no service defined for ${whatAmI}"
+	exit 2
+}; fi
