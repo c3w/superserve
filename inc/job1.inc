@@ -1,1 +1,1 @@
-job1&
+/usr/local/bin/job1&
