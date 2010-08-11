@@ -1,4 +1,4 @@
-SUPERSERVE
+SUPERSERVE v0.1
 by c3w
 http://github.com/c3w/superserve
 
@@ -8,10 +8,10 @@ Got a job/daemon that needs to run at boot time?  You could put it in /etc/cront
 job, but wouldn't you like to have start/stop/restart control?
 
 Enter SuperServe! You can create as many jobs as you'd like, symlink them in init.d to the
-superserve script, and superserve, using $0, references the appropriate .inc in /opt/superserve
+superserve script, and superserve, using $0, references the appropriate .inc in /opt/superserve/inc
 
 Usage:
-	mkdir -p /opt/superserve
+	mkdir -p /opt/superserve/inc
 	create a .inc, e.g. job1.inc
 		job1.inc reads
 			job1&
