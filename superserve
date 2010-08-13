@@ -49,8 +49,12 @@ if [ -f ${BASE_DIR}/inc/${whatAmI}.inc ]; then {
 				echo_failure; echo
 			}; fi
 			;;
+		reload)
+			echo -n "reloading ${whatAmI}. . . "
+			kill -1 $(cat /var/run/${whatAmI}.pid)
+			;;
 		*)
-			echo "Usage: $whatAmI [start|stop|restart]"
+			echo "Usage: $whatAmI [start|stop|restart|reload]"
 			;;
 	esac
 } else {
