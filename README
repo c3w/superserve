@@ -21,3 +21,6 @@ Usage:
 		chkconfig job1 add
 		chkconfig job1 on
 		service job1 restart
+
+NOTE: if your process forks a new PID, hopefully there is a config to set the pid file where
+superserve expects it, i.e. /var/run/job1.pid

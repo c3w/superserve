@@ -1,1 +1,1 @@
-/usr/local/bin/job1&
+nohup /usr/local/bin/job1&
