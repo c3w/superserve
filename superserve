@@ -6,7 +6,13 @@
 
 # Usage: Symlink a process name to superserve and create an inc/process.inc with START_CMD, STOP_CMD, and RESTART_CMD
 
-whatAmI=$(echo ${0}|sed -e "s/[\.\/]//g;s/^etcinitd//g")
+whatAmI=$(basename -- $0)
+
+#trim out the prefix if we're being called from /etc/rc[0-6].d 
+if [ $(echo $whatAmI | grep "[SK][0-9]\{2\}") ]; then {
+  whatAmI=$(echo $whatAmI|cut -b 4-)
+}; fi
+
 BASE_DIR="/opt/superserve"
 
 # Source function library.
